@@ -13,13 +13,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$100.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DhA-ht-cV4">
-                                <rect key="frame" x="151" y="86" width="153" height="36"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$18.00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mOh-au-E89">
                                 <rect key="frame" x="165" y="173" width="139" height="26"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -130,6 +123,15 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="RyO-hN-N1g">
+                                <rect key="frame" x="16" y="47" width="288" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <connections>
+                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingChanged" id="lUm-sl-Wcy"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.24299049951432816" green="1" blue="0.21989617846837939" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -141,9 +143,10 @@
                         <barButtonItem key="rightBarButtonItem" title="Settings" id="Ufi-LU-hJp"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="billField" destination="RyO-hN-N1g" id="she-tb-XY1"/>
                         <outlet property="tipControl" destination="S9P-nk-e8p" id="gCN-da-ptW"/>
                         <outlet property="tipLabel" destination="mOh-au-E89" id="JKk-pk-qnc"/>
-                        <outlet property="totalLabel" destination="DhA-ht-cV4" id="dbv-B7-rGi"/>
+                        <outlet property="totalLabel" destination="0L2-GU-EgV" id="i3e-F5-HRi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -153,7 +156,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-1253" y="-1090"/>
+            <point key="canvasLocation" x="-1429" y="-1324"/>
         </scene>
         <!--Raw Amount View Controller-->
         <scene sceneID="6g2-9f-ucP">
@@ -183,7 +186,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DQa-zs-QvQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1682" y="-1106"/>
+            <point key="canvasLocation" x="-1994" y="-1136"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

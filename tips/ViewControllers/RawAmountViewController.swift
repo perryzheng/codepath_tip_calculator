@@ -14,7 +14,7 @@ class RawAmountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        rawAmountField.becomeFirstResponder()
         // Do any additional setup after loading the view.
     }
 
@@ -25,16 +25,22 @@ class RawAmountViewController: UIViewController {
 
     @IBAction func enterRawAmount(sender: AnyObject) {
         if (!rawAmountField.text.isEmpty) {
-            println("going after check_list_view")
             self.performSegueWithIdentifier("check_list_view", sender: self)
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        println("about to prepare")
         if (segue.identifier == "check_list_view") {
             println("preparing for segue")
-            
+            if (segue.destinationViewController .isKindOfClass(ViewController)) {
+                let vc: ViewController  = segue.destinationViewController as ViewController
+                var text = rawAmountField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                text = text.substringFromIndex(text.startIndex.successor())
+//                println("text=" + text)
+//                let rawAmount = text.substringFromIndex(text.startIndex.successor())._bridgeToObjectiveC().doubleValue
+//                println(rawAmount)
+                vc.rawAmount = text
+            }
         }
     }
     

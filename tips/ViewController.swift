@@ -9,7 +9,9 @@
 import UIKit
 
 class ViewController: UIViewController {
-                            
+    
+    var rawAmount: String = ""
+    
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
@@ -19,6 +21,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        billField.becomeFirstResponder()
+        billField.text = rawAmount
     }
 
     @IBAction func onTap(sender: AnyObject) {
@@ -35,7 +39,8 @@ class ViewController: UIViewController {
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         //var billAmount = billField.text._bridgeToObjectiveC().doubleValue
-        var billAmount = 120.00
+        println("billFieldText=" + billField.text)
+        var billAmount = billField.text._bridgeToObjectiveC().doubleValue
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
 
