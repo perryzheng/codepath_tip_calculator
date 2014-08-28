@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    //@IBOutlet weak var totalAmountsView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +34,8 @@ class ViewController: UIViewController {
         var tipPercentages = [0.18, 0.20, 0.22]
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billAmount = billField.text._bridgeToObjectiveC().doubleValue
+        //var billAmount = billField.text._bridgeToObjectiveC().doubleValue
+        var billAmount = 120.00
         var tip = billAmount * tipPercentage
         var total = billAmount + tip
 
