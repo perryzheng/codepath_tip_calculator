@@ -12,14 +12,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var rawAmount: String = ""
     
-    @IBOutlet weak var dataSource: UITableView!
-    @IBOutlet weak var delegate: UITableView!
-    
+    @IBOutlet weak var checkSplitTableView: UITableView!;
     
     @IBOutlet weak var billField: UITextField!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
+    
+    var items: [String] = ["hi", "foo", "bar"]
     //@IBOutlet weak var totalAmountsView: UIView!
     
     override func viewDidLoad() {
@@ -51,15 +51,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCellWithIdentifier("split check cell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.text = "hi"
+        let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
+        cell.textLabel.text = items[indexPath.row]
         return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+        return 1
+    }
+    
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+        return items.count
     }
 }
 
