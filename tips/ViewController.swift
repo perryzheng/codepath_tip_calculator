@@ -20,8 +20,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
-    let numPeople: Int = 10
-    var items: [String] = ["hi", "foo", "bar"]
+    let numPeople: Int = 8
+
     private var total: Double = 0.0
     //@IBOutlet weak var totalAmountsView: UIView!
     
@@ -47,7 +47,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.textAlignment = NSTextAlignment.Right
         cell.textLabel.textColor = UIColor.greenColor()
 
@@ -60,17 +60,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if (indexPath.row == 0)
         {
-            cell.textLabel.text = String(format: "$%.2f", tip)
-            cell.textLabel.font = UIFont(name:"HelveticaNeue-Light", size: 20.0)
+            for view in cell.contentView.subviews {
+                view.removeFromSuperview()
+            }
+//          println("cell.subviews=" + String(format:"%i", cell.subviews.count))
+            cell.textLabel.text = String(format: "Tip: $%.2f", tip)
+            cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
         }
         else
         {
             for var i = 0; i < indexPath.row; i++
             {
-                cell.contentView.addSubview(getPersonImageView(i))
+                var imv = getPersonImageView(i)
+                cell.contentView.addSubview(imv)
+                imv = nil
             }
             cell.textLabel.text = String(format: "$%.2f", total / Double(indexPath.row + 1))
-            cell.textLabel.font = UIFont(name:"HelveticaNeue-Light", size: 40.0)
+            cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
         }
         return cell
     }
