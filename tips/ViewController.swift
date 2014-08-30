@@ -13,16 +13,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
-    
     @IBOutlet weak var billField: UITextField!
-    //@IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
     let numPeople: Int = 8
 
     private var total: Double = 0.0
-    //@IBOutlet weak var totalAmountsView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +42,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        
 //        defaults.synchronize()
     }
-    
     
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
@@ -77,19 +73,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var tip = billAmount * tipPercentage
         total = billAmount + tip
         
-        if (indexPath.row == 0)
-        {
+        if (indexPath.row == 0) {
             for view in cell.contentView.subviews {
                 view.removeFromSuperview()
             }
-//          println("cell.subviews=" + String(format:"%i", cell.subviews.count))
+            
             cell.textLabel.text = String(format: "Tip: $%.2f", tip)
             cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
-        }
-        else
-        {
-            for var i = 0; i < indexPath.row; i++
-            {
+        } else {
+            for var i = 0; i < indexPath.row; i++ {
                 var imv = getPersonImageView(i)
                 cell.contentView.addSubview(imv)
                 imv = nil
