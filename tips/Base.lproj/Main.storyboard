@@ -32,6 +32,7 @@
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingChanged" id="lUm-sl-Wcy"/>
+                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="uoH-hJ-weH"/>
                                 </connections>
                             </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Dv-ka-7xh">
@@ -67,6 +68,7 @@
                         <outlet property="billField" destination="RyO-hN-N1g" id="she-tb-XY1"/>
                         <outlet property="checkSplitTableView" destination="2Dv-ka-7xh" id="NmH-uI-p4a"/>
                         <outlet property="tipControl" destination="S9P-nk-e8p" id="gCN-da-ptW"/>
+                        <segue destination="IpP-pJ-eRE" kind="modal" identifier="to raw amount segue" id="MMJ-HF-RnN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -76,7 +78,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3475" y="-1210"/>
+            <point key="canvasLocation" x="-3421" y="-1555"/>
         </scene>
         <!--Split Check Table Table View Controller-->
         <scene sceneID="faX-Zh-eei">
@@ -102,7 +104,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WVa-Ab-Pem" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-4260" y="-1078"/>
+            <point key="canvasLocation" x="-4264" y="-1459"/>
         </scene>
         <!--Raw Amount View Controller-->
         <scene sceneID="6g2-9f-ucP">

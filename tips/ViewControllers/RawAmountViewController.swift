@@ -14,8 +14,19 @@ class RawAmountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        var defaults = NSUserDefaults.standardUserDefaults()
+//        var temp = defaults.objectForKey("rawAmountField") as UITextField!
+//        if (temp != nil) && !temp!.text.isEmpty {
+//            rawAmountField = temp
+//            enterRawAmount(self)
+//        }
         rawAmountField.becomeFirstResponder()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+//        var defaults = NSUserDefaults.standardUserDefaults()
+//        defaults.setObject(rawAmountField.text, forKey: "rawAmountField")
+//        defaults.synchronize()
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,7 +35,7 @@ class RawAmountViewController: UIViewController {
     }
 
     @IBAction func enterRawAmount(sender: AnyObject) {
-        if (!rawAmountField.text.isEmpty) {
+        if (!rawAmountField!.text.isEmpty) {
             self.performSegueWithIdentifier("check_list_view", sender: self)
         }
     }

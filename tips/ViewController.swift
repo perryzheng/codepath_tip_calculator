@@ -16,7 +16,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     @IBOutlet weak var billField: UITextField!
     //@IBOutlet weak var tipLabel: UILabel!
-    @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
@@ -27,12 +26,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+//        var defaults = NSUserDefaults.standardUserDefaults()
+//        var rawAmountTemp = defaults.objectForKey("rawAmount") as String!
+//        if (rawAmountTemp != nil) {
+//            rawAmount = rawAmountTemp
+//        }
+        //var billFieldTemp = defaults.objectForKey("billField") as UITextField
+        
         billField.becomeFirstResponder()
         billField.text = rawAmount
         onEditingChanged(self)
     }
-
+    
+    override func viewWillDisappear(animated: Bool) {
+//        var defaults = NSUserDefaults.standardUserDefaults()
+//        defaults.setObject(rawAmount, forKey: "rawAmount")
+//        //defaults.setObject(billField, forKey: "billField")
+//        
+//        defaults.synchronize()
+    }
+    
+    
     @IBAction func onTap(sender: AnyObject) {
         view.endEditing(true)
     }
@@ -47,6 +61,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
+        
+        if (billField.text.isEmpty) {
+            self.performSegueWithIdentifier("to raw amount segue", sender: self)
+        }
+        
         var cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.textAlignment = NSTextAlignment.Right
         cell.textLabel.textColor = UIColor.greenColor()
@@ -75,7 +94,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.contentView.addSubview(imv)
                 imv = nil
             }
-            cell.textLabel.text = String(format: "$%.2f", total / Double(indexPath.row + 1))
+            cell.textLabel.text = String(format: "$%.2f", total / Double(indexPath.row))
             cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
         }
         return cell
