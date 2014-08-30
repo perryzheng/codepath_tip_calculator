@@ -38,7 +38,6 @@ class RawAmountViewController: UIViewController {
     func updateUI() {
         rawAmountField.becomeFirstResponder()
         rawAmountField.textAlignment = NSTextAlignment.Right
-        //enterRawAmount(self)
     }
     
     override func didReceiveMemoryWarning() {
@@ -47,7 +46,6 @@ class RawAmountViewController: UIViewController {
 
     @IBAction func enterRawAmount(sender: AnyObject) {
         rawAmount = rawAmountField.text._bridgeToObjectiveC().substringFromIndex(1)
-        //let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         tipsNSUserDefaults.setRawAmount(rawAmount)
         
         if (!rawAmount.isEmpty) {

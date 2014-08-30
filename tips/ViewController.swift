@@ -38,7 +38,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             UIApplicationDidEnterBackgroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
-
     }
     
     func updateUI() {
@@ -103,7 +102,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         possibleToSegue()
         saveRawAccount()
-        
+
         var cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.textAlignment = NSTextAlignment.Right
         cell.textLabel.textColor = UIColor.greenColor()
@@ -120,6 +119,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 view.removeFromSuperview()
             }
             
+            let roundView: UIView = UIView(frame: CGRectMake(0, 0, 320, 50))
+            let roundUpButton: UIButton = UIButton(frame: CGRectMake(10, 10, 50, 30))
+            roundUpButton.setTitle("Up", forState: UIControlState.Normal)
+            roundUpButton.setTitleColor(UIColor.greenColor(), forState: UIControlState.Normal)
+            roundUpButton.titleEdgeInsets
+            roundView.addSubview(roundUpButton)
+            
+            let roundDownButton: UIButton = UIButton(frame: CGRectMake(70, 10, 50, 30))
+            roundDownButton.setTitle("Down", forState: UIControlState.Normal)
+            roundView.addSubview(roundDownButton)
+            
+            //roundView.backgroundColor = UIColor.blackColor()
+            
+            cell.addSubview(roundView)
             cell.textLabel.text = String(format: "Tip: $%.2f", tip)
             cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
         } else {
