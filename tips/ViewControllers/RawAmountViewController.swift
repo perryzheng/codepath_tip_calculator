@@ -11,22 +11,15 @@ import UIKit
 class RawAmountViewController: UIViewController {
 
     @IBOutlet weak var rawAmountField: UITextField!
+    let tipsNSUserDefaults: TipsNSUserDefaults = TipsNSUserDefaults()
+    var rawAmount: String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        var defaults = NSUserDefaults.standardUserDefaults()
-//        var temp = defaults.objectForKey("rawAmountField") as UITextField!
-//        if (temp != nil) && !temp!.text.isEmpty {
-//            rawAmountField = temp
-//            enterRawAmount(self)
-//        }
         rawAmountField.becomeFirstResponder()
-    }
-    
-    override func viewDidDisappear(animated: Bool) {
-//        var defaults = NSUserDefaults.standardUserDefaults()
-//        defaults.setObject(rawAmountField.text, forKey: "rawAmountField")
-//        defaults.synchronize()
+        rawAmount = tipsNSUserDefaults.getRawAmount()
+        rawAmountField.text = "$" + rawAmount
+        rawAmountField.textAlignment = NSTextAlignment.Right
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,21 +28,20 @@ class RawAmountViewController: UIViewController {
     }
 
     @IBAction func enterRawAmount(sender: AnyObject) {
-        if (!rawAmountField!.text.isEmpty) {
+        let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        tipsNSUserDefaults.setRawAmount(rawAmount)
+        println("raw=" + rawAmount)
+        if (!rawAmount.isEmpty) {
             self.performSegueWithIdentifier("check_list_view", sender: self)
         }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
         if (segue.identifier == "check_list_view") {
-            println("preparing for segue")
             if (segue.destinationViewController .isKindOfClass(ViewController)) {
                 let vc: ViewController  = segue.destinationViewController as ViewController
                 var text = rawAmountField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
                 text = text.substringFromIndex(text.startIndex.successor())
-//                println("text=" + text)
-//                let rawAmount = text.substringFromIndex(text.startIndex.successor())._bridgeToObjectiveC().doubleValue
-//                println(rawAmount)
                 vc.rawAmount = text
             }
         }

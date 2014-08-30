@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let tipsNSUserDefaults: TipsNSUserDefaults = TipsNSUserDefaults()
+    
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
@@ -23,24 +25,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        var defaults = NSUserDefaults.standardUserDefaults()
-//        var rawAmountTemp = defaults.objectForKey("rawAmount") as String!
-//        if (rawAmountTemp != nil) {
-//            rawAmount = rawAmountTemp
-//        }
-        //var billFieldTemp = defaults.objectForKey("billField") as UITextField
-        
         billField.becomeFirstResponder()
+        rawAmount = tipsNSUserDefaults.getRawAmount()
+        println("rawAmount=" + rawAmount)
         billField.text = rawAmount
         onEditingChanged(self)
     }
     
     override func viewWillDisappear(animated: Bool) {
-//        var defaults = NSUserDefaults.standardUserDefaults()
-//        defaults.setObject(rawAmount, forKey: "rawAmount")
-//        //defaults.setObject(billField, forKey: "billField")
-//        
-//        defaults.synchronize()
     }
     
     @IBAction func onTap(sender: AnyObject) {
@@ -49,16 +41,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
+        tipsNSUserDefaults.setRawAmount(rawAmount)
         checkSplitTableView.reloadData()
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
         if (billField.text.isEmpty) {
+            tipsNSUserDefaults.setRawAmount("")
             self.performSegueWithIdentifier("to raw amount segue", sender: self)
         }
         

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EE57CB7319B198CE0016A590 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = EE57CB7219B198CE0016A590 /* README.md */; };
+		EE57CB7519B19D300016A590 /* TipsNSUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57CB7419B19D300016A590 /* TipsNSUserDefaults.swift */; };
 		EEA538BD19AEEDE5007449A6 /* RawAmountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA538BC19AEEDE5007449A6 /* RawAmountViewController.swift */; };
 		EEBC734E19AD9BF10036F245 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC734D19AD9BF10036F245 /* AppDelegate.swift */; };
 		EEBC735019AD9BF10036F245 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC734F19AD9BF10036F245 /* ViewController.swift */; };
@@ -27,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EE57CB7219B198CE0016A590 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		EE57CB7419B19D300016A590 /* TipsNSUserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TipsNSUserDefaults.swift; path = Model/TipsNSUserDefaults.swift; sourceTree = "<group>"; };
 		EEA538BC19AEEDE5007449A6 /* RawAmountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RawAmountViewController.swift; path = ViewControllers/RawAmountViewController.swift; sourceTree = "<group>"; };
 		EEBC734819AD9BF10036F245 /* tips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEBC734C19AD9BF10036F245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -58,9 +62,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE57CB7619B19D360016A590 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				EE57CB7419B19D300016A590 /* TipsNSUserDefaults.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		EEBC733F19AD9BF10036F245 = {
 			isa = PBXGroup;
 			children = (
+				EE57CB7219B198CE0016A590 /* README.md */,
 				EEBC734A19AD9BF10036F245 /* tips */,
 				EEBC735D19AD9BF10036F245 /* tipsTests */,
 				EEBC734919AD9BF10036F245 /* Products */,
@@ -79,6 +92,7 @@
 		EEBC734A19AD9BF10036F245 /* tips */ = {
 			isa = PBXGroup;
 			children = (
+				EE57CB7619B19D360016A590 /* Model */,
 				EECE1B6119B03AD9006ABC2F /* images */,
 				EEBC736C19ADAA5D0036F245 /* View Controllers */,
 				EEBC734D19AD9BF10036F245 /* AppDelegate.swift */,
@@ -232,7 +246,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEBC735019AD9BF10036F245 /* ViewController.swift in Sources */,
+				EE57CB7519B19D300016A590 /* TipsNSUserDefaults.swift in Sources */,
 				EEA538BD19AEEDE5007449A6 /* RawAmountViewController.swift in Sources */,
+				EE57CB7319B198CE0016A590 /* README.md in Sources */,
 				EEBC734E19AD9BF10036F245 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
