@@ -46,7 +46,9 @@ class RawAmountViewController: UIViewController {
     }
 
     @IBAction func enterRawAmount(sender: AnyObject) {
-        rawAmount = rawAmountField.text._bridgeToObjectiveC().substringFromIndex(1)
+        if (rawAmountField.text._bridgeToObjectiveC().length != 0) {
+            rawAmount = rawAmountField.text._bridgeToObjectiveC().substringFromIndex(1)
+        }
         //let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         tipsNSUserDefaults.setRawAmount(rawAmount)
         
@@ -61,7 +63,9 @@ class RawAmountViewController: UIViewController {
             if (segue.destinationViewController .isKindOfClass(ViewController)) {
                 let vc: ViewController  = segue.destinationViewController as ViewController
                 var text = rawAmountField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-                text = text.substringFromIndex(text.startIndex.successor())
+                if (text._bridgeToObjectiveC().length != 0) {
+                    text = text.substringFromIndex(text.startIndex.successor())
+                }
                 vc.rawAmount = text
             }
         }
