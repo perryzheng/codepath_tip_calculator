@@ -15,8 +15,8 @@ class TipsNSUserDefaults: NSObject {
         var userDefaults = NSUserDefaults.standardUserDefaults()
         let tempAmount = userDefaults.objectForKey("RawAmount") as AnyObject! as String!
         let lastRefreshDate = userDefaults.objectForKey("LastRefreshDate") as NSDate
-        let diffMs = (NSDate().timeIntervalSinceReferenceDate - lastRefreshDate.timeIntervalSinceReferenceDate)
-        if (diffMs > 30) {
+        let diffSec = (NSDate().timeIntervalSinceReferenceDate - lastRefreshDate.timeIntervalSinceReferenceDate)
+        if (diffSec > 60) {
             self.setRawAmount("")
             return ""
         } else {
