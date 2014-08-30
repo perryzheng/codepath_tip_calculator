@@ -8,3 +8,4 @@ Optionaly features of iOS I used
 3. UITableView within a UIView
 4. Creating cells dynamically within the UITableView
 5. NSUserdefaults 
+6. Haven't gotten the "Adding round up and down" working. 
