@@ -16,12 +16,33 @@ class RawAmountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        updateUI()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
+    }
+    
+    func appDidBecomeActive(notification: NSNotification) {
+        println("in RawViewController appDidBecomeActive")
+        rawAmount = tipsNSUserDefaults.getRawAmount()
+        println(rawAmount)
+        updateUI()
+    }
+    
+    func appResign(notification: NSNotification) {
+        println("in RawViewController appResign")
+        tipsNSUserDefaults.setRawAmount(rawAmount)
+    }
+    
+    func updateUI() {
         rawAmountField.becomeFirstResponder()
         rawAmount = tipsNSUserDefaults.getRawAmount()
         rawAmountField.text = "$" + rawAmount
         rawAmountField.textAlignment = NSTextAlignment.Right
+        enterRawAmount(self)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -30,7 +51,6 @@ class RawAmountViewController: UIViewController {
     @IBAction func enterRawAmount(sender: AnyObject) {
         let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         tipsNSUserDefaults.setRawAmount(rawAmount)
-        println("raw=" + rawAmount)
         if (!rawAmount.isEmpty) {
             self.performSegueWithIdentifier("check_list_view", sender: self)
         }

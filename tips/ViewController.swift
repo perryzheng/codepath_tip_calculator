@@ -25,11 +25,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        println("in view controller")
+        updateUI()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
+
+    }
+    
+    func updateUI() {
         billField.becomeFirstResponder()
         rawAmount = tipsNSUserDefaults.getRawAmount()
-        println("rawAmount=" + rawAmount)
         billField.text = rawAmount
         onEditingChanged(self)
+    }
+    
+    func appDidBecomeActive(notification: NSNotification) {
+        println("in ViewController didBecomeActive")
+        rawAmount = tipsNSUserDefaults.getRawAmount()
+        println("in ViewController=" + rawAmount)
+        updateUI()
+    }
+    
+    func appResign(notification: NSNotification) {
+        println("in ViewController appResign")
+        println(rawAmount)
+        tipsNSUserDefaults.setRawAmount(rawAmount)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -63,6 +84,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         var billAmount = billField.text._bridgeToObjectiveC().doubleValue
+        rawAmount = billField.text
         var tip = billAmount * tipPercentage
         total = billAmount + tip
         
