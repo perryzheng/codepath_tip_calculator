@@ -25,9 +25,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("in view controller")
         updateUI()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        //two are unnecessary and are here only for educational purposes
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appBecomeActive:", name:
+            UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterForeground:", name:
+            UIApplicationWillEnterForegroundNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterBackground:", name:
+            UIApplicationDidEnterBackgroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
 
@@ -35,21 +43,33 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func updateUI() {
         billField.becomeFirstResponder()
-        rawAmount = tipsNSUserDefaults.getRawAmount()
         billField.text = rawAmount
+    }
+    
+    //ordering when exiting the app
+    //appResign
+    //appEnterBackground
+    
+    //ordengi when reopening the app
+    //enterForeGround
+    //appBecomeActive
+    
+    func appBecomeActive(notification: NSNotification) {
+        println("in appBecomeActive")
+    }
+    
+    func appEnterForeground(notification: NSNotification) {
+        println("in ViewController enter foreground")
+        rawAmount = tipsNSUserDefaults.getRawAmount()
         onEditingChanged(self)
     }
     
-    func appDidBecomeActive(notification: NSNotification) {
-        println("in ViewController didBecomeActive")
-        rawAmount = tipsNSUserDefaults.getRawAmount()
-        println("in ViewController=" + rawAmount)
-        updateUI()
+    func appEnterBackground(notification: NSNotification) {
+        println("in appEnterBackground")
     }
     
     func appResign(notification: NSNotification) {
         println("in ViewController appResign")
-        println(rawAmount)
         tipsNSUserDefaults.setRawAmount(rawAmount)
     }
     
@@ -65,16 +85,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
-        tipsNSUserDefaults.setRawAmount(rawAmount)
         checkSplitTableView.reloadData()
+    }
+    
+    private func saveRawAccount() {
+        rawAmount = billField.text
+        tipsNSUserDefaults.setRawAmount(rawAmount)
+    }
+    
+    private func possibleToSegue() {
+        if (rawAmount.isEmpty) {
+            self.performSegueWithIdentifier("to raw amount segue", sender: self)
+        }
     }
     
     func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
         
-        if (billField.text.isEmpty) {
-            tipsNSUserDefaults.setRawAmount("")
-            self.performSegueWithIdentifier("to raw amount segue", sender: self)
-        }
+        possibleToSegue()
+        saveRawAccount()
         
         var cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
         cell.textLabel.textAlignment = NSTextAlignment.Right
@@ -84,7 +112,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
         var billAmount = billField.text._bridgeToObjectiveC().doubleValue
-        rawAmount = billField.text
         var tip = billAmount * tipPercentage
         total = billAmount + tip
         

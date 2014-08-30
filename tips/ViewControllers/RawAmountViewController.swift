@@ -16,8 +16,9 @@ class RawAmountViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        println("in RawViewController viewDidLoad")
         updateUI()
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appDidBecomeActive:", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
@@ -27,7 +28,6 @@ class RawAmountViewController: UIViewController {
         println("in RawViewController appDidBecomeActive")
         rawAmount = tipsNSUserDefaults.getRawAmount()
         println(rawAmount)
-        updateUI()
     }
     
     func appResign(notification: NSNotification) {
@@ -37,23 +37,23 @@ class RawAmountViewController: UIViewController {
     
     func updateUI() {
         rawAmountField.becomeFirstResponder()
-        rawAmount = tipsNSUserDefaults.getRawAmount()
-        rawAmountField.text = "$" + rawAmount
         rawAmountField.textAlignment = NSTextAlignment.Right
-        enterRawAmount(self)
+        //enterRawAmount(self)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     @IBAction func enterRawAmount(sender: AnyObject) {
-        let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        rawAmount = rawAmountField.text._bridgeToObjectiveC().substringFromIndex(1)
+        //let rawAmount = rawAmountField.text.stringByReplacingOccurrencesOfString("$", withString: "", options: NSStringCompareOptions.LiteralSearch, range: nil)
         tipsNSUserDefaults.setRawAmount(rawAmount)
+        
         if (!rawAmount.isEmpty) {
             self.performSegueWithIdentifier("check_list_view", sender: self)
         }
+        updateUI()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
