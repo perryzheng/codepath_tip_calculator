@@ -1,11 +1,23 @@
-Tips app for codepath
+Tips Calculator app for Codepath
+==============
 
-This is a simple tips app. 
+Time spent: 10 hours total
 
-Optionaly features of iOS I used
-1. Conditionally segueing
-2. Loading an image
-3. UITableView within a UIView
-4. Creating cells dynamically within the UITableView
-5. NSUserdefaults 
-6. Haven't gotten the "Adding round up and down" working. 
+Completed user stories 
+* [x] Required: Basic tip calculator functionality
+* [x] Required: Settings (on the same page)
+* [x] Optional: View animation
+* [x] Optional: Remember the bill amount across app restarts (within 60 seconds)
+* [x] Optional: Conditionally segueing
+* [x] Optional: Loading an image
+* [x] Optional: Use a UITableView within an UIView
+* [x] Optional: Creating cells dynamically within the UITableView
+
+Did not complete: 
+* [] Optional: Use locale specific currencies
+* [] Optional: Light/dark color theme in settings view 
+
+**Walkthrough of required and optional user stories:**
+![](screen-shot.gif)
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).

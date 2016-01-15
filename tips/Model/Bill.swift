@@ -8,13 +8,13 @@
 
 import UIKit
 
-class TipsNSUserDefaults: NSObject {
-    var rawAmount: String = ""
+class Bill: NSObject {
+    var _rawAmount: String = ""
     
     func getRawAmount() -> String {
-        var userDefaults = NSUserDefaults.standardUserDefaults()
-        let tempAmount = userDefaults.objectForKey("RawAmount") as AnyObject! as String!
-        let lastRefreshDate = userDefaults.objectForKey("LastRefreshDate") as NSDate!
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let tempAmount = userDefaults.objectForKey("RawAmount") as AnyObject! as! String!
+        let lastRefreshDate = userDefaults.objectForKey("LastRefreshDate") as! NSDate!
         if (lastRefreshDate == nil) {
             return ""
         }
@@ -28,15 +28,15 @@ class TipsNSUserDefaults: NSObject {
     }
     
     private func synchronize() {
-        var defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(rawAmount, forKey: "RawAmount")
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(_rawAmount, forKey: "RawAmount")
         defaults.setObject(NSDate(), forKey: "LastRefreshDate")
         defaults.synchronize()
     }
     
     func setRawAmount(rawAmount: String)
     {
-        self.rawAmount = rawAmount
+        self._rawAmount = rawAmount
         synchronize()
     }
 }
