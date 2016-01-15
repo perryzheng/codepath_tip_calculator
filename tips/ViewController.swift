@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
-    let numPeople: Int = 10
+    let numPeople: Int = 9
 
     private var total: Double = 0.0
     
