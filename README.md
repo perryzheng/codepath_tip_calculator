@@ -18,6 +18,6 @@ Did not complete:
 * [] Optional: Light/dark color theme in settings view 
 
 **Walkthrough of required and optional user stories:**
-![](screen-shot.gif)
+![](screen_shot.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
