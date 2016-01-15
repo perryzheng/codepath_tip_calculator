@@ -14,10 +14,10 @@ Completed user stories
 * [x] Optional: Creating cells dynamically within the UITableView
 
 Did not complete: 
-* [] Optional: Use locale specific currencies
-* [] Optional: Light/dark color theme in settings view 
+* [ ] Optional: Use locale specific currencies
+* [ ] Optional: Light/dark color theme in settings view 
 
 **Walkthrough of required and optional user stories:**
-![](screen-shot.gif)
+![](screen_shot.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
