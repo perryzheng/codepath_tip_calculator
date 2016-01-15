@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let tipsNSUserDefaults: TipsNSUserDefaults = TipsNSUserDefaults()
+    let bill: Bill = Bill()
     
     var rawAmount: String = ""
     
@@ -19,7 +19,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
-    let numPeople: Int = 8
+    let numPeople: Int = 10
 
     private var total: Double = 0.0
     
@@ -55,22 +55,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //appBecomeActive
     
     func appBecomeActive(notification: NSNotification) {
-        println("in appBecomeActive")
+        print("in appBecomeActive")
     }
     
     func appEnterForeground(notification: NSNotification) {
-        println("in ViewController enter foreground")
-        rawAmount = tipsNSUserDefaults.getRawAmount()
+        print("in ViewController enter foreground")
+        rawAmount = bill.getRawAmount()
         onEditingChanged(self)
     }
     
     func appEnterBackground(notification: NSNotification) {
-        println("in appEnterBackground")
+        print("in appEnterBackground")
     }
     
     func appResign(notification: NSNotification) {
-        println("in ViewController appResign")
-        tipsNSUserDefaults.setRawAmount(rawAmount)
+        print("in ViewController appResign")
+        bill.setRawAmount(rawAmount)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -89,8 +89,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     private func saveRawAccount() {
-        rawAmount = billField.text
-        tipsNSUserDefaults.setRawAmount(rawAmount)
+        rawAmount = billField.text!
+        bill.setRawAmount(rawAmount)
     }
     
     private func possibleToSegue() {
@@ -99,20 +99,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!) -> UITableViewCell! {
-        
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         possibleToSegue()
         saveRawAccount()
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath) as UITableViewCell
-        cell.textLabel.textAlignment = NSTextAlignment.Right
-        cell.textLabel.textColor = UIColor.greenColor()
+        let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath)
+        cell.textLabel!.textAlignment = NSTextAlignment.Right
+        cell.textLabel!.textColor = UIColor.greenColor()
 
         var tipPercentages = [0.18, 0.20, 0.22]
-        var tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
         
-        var billAmount = billField.text._bridgeToObjectiveC().doubleValue
-        var tip = billAmount * tipPercentage
+        let billAmount = billField.text!._bridgeToObjectiveC().doubleValue
+        let tip = billAmount * tipPercentage
         total = billAmount + tip
         
         if (indexPath.row == 0) {
@@ -120,32 +119,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 view.removeFromSuperview()
             }
             
-            cell.textLabel.text = String(format: "Tip: $%.2f", tip)
-            cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
+            cell.textLabel!.text = String(format: "Tip: $%.2f", tip)
+            cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
         } else {
             for var i = 0; i < indexPath.row; i++ {
                 var imv = getPersonImageView(i)
                 cell.contentView.addSubview(imv)
                 imv = nil
             }
-            cell.textLabel.text = String(format: "$%.2f", total / Double(indexPath.row))
-            cell.textLabel.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
+            cell.textLabel!.text = String(format: "$%.2f", total / Double(indexPath.row))
+            cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
         }
         return cell
     }
     
     func getPersonImageView(personI: Int) -> UIImageView! {
         let x: Double = Double(personI) * 20.0
-        var imv = UIImageView(frame: CGRectMake(CGFloat(x), 7.8, 40, 40));
+        let imv = UIImageView(frame: CGRectMake(CGFloat(x), 7.8, 40, 40));
         imv.image = uiImage
         return imv
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return numPeople+1
     }
 }
