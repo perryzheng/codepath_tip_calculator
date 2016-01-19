@@ -10,12 +10,14 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var rawBillField: UITextField!
     let bill: Bill = Bill()
     
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
     @IBOutlet weak var billField: UITextField!
+    
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
@@ -42,6 +44,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func updateUI() {
+        //billField.hidden = true
+        //rawBillField.becomeFirstResponder()
         billField.becomeFirstResponder()
         billField.text = rawAmount
     }
@@ -93,14 +97,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         bill.setRawAmount(rawAmount)
     }
     
-    private func possibleToSegue() {
-        if (rawAmount.isEmpty) {
-            self.performSegueWithIdentifier("to raw amount segue", sender: self)
-        }
-    }
+//    private func possibleToSegue() {
+//        if (rawAmount.isEmpty) {
+//            self.performSegueWithIdentifier("to raw amount segue", sender: self)
+//        }
+//    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        possibleToSegue()
+//        possibleToSegue()
         saveRawAccount()
         
         let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath)
