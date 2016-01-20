@@ -19,6 +19,6 @@ Did not complete:
 
 **Walkthrough of required and optional user stories:**
 
-![](screen_shot.gif)
+![](walkthrough.gif)
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
