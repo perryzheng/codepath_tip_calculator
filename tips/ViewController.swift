@@ -9,8 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    @IBOutlet weak var rawBillField: UITextField!
     let bill: Bill = Bill()
     
     var rawAmount: String = ""
@@ -22,8 +20,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     let uiImage = UIImage(named:"person.png")
     let numPeople: Int = 9
-
+    let rawViewBillFieldYPosition = CGFloat(182.0)
+    let populatedBillFieldYPosition = CGFloat(82.0)
+    
     private var total: Double = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,10 +45,18 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func updateUI() {
-        //billField.hidden = true
-        //rawBillField.becomeFirstResponder()
+        rawAmount = billField.text!
+        if (rawAmount == "") {
+            checkSplitTableView.hidden = true
+            tipControl.hidden = true
+            billField.frame = CGRectMake(billField.frame.origin.x, rawViewBillFieldYPosition, billField.frame.size.width, billField.frame.size.height)
+        } else {
+            billField.frame = CGRectMake(billField.frame.origin.x, populatedBillFieldYPosition, billField.frame.size.width, billField.frame.size.height)
+            checkSplitTableView.hidden = false
+            tipControl.hidden = false
+        }
+        checkSplitTableView.reloadData()
         billField.becomeFirstResponder()
-        billField.text = rawAmount
     }
     
     //ordering when exiting the app
@@ -89,22 +98,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
-        checkSplitTableView.reloadData()
+        updateUI()
     }
     
     private func saveRawAccount() {
         rawAmount = billField.text!
         bill.setRawAmount(rawAmount)
     }
-    
-//    private func possibleToSegue() {
-//        if (rawAmount.isEmpty) {
-//            self.performSegueWithIdentifier("to raw amount segue", sender: self)
-//        }
-//    }
-    
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        possibleToSegue()
         saveRawAccount()
         
         let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath)
