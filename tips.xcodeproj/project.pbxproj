@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		EE57CB7319B198CE0016A590 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = EE57CB7219B198CE0016A590 /* README.md */; };
-		EE57CB7519B19D300016A590 /* Bill.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57CB7419B19D300016A590 /* Bill.swift */; };
+		EE57CB7519B19D300016A590 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE57CB7419B19D300016A590 /* Calculator.swift */; };
 		EEBC734E19AD9BF10036F245 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC734D19AD9BF10036F245 /* AppDelegate.swift */; };
 		EEBC735019AD9BF10036F245 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEBC734F19AD9BF10036F245 /* ViewController.swift */; };
 		EEBC735319AD9BF10036F245 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEBC735119AD9BF10036F245 /* Main.storyboard */; };
@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		EE57CB7219B198CE0016A590 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		EE57CB7419B19D300016A590 /* Bill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Bill.swift; path = Model/Bill.swift; sourceTree = "<group>"; };
+		EE57CB7419B19D300016A590 /* Calculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Calculator.swift; path = Model/Calculator.swift; sourceTree = "<group>"; };
 		EEBC734819AD9BF10036F245 /* tips.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tips.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEBC734C19AD9BF10036F245 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEBC734D19AD9BF10036F245 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		EE57CB7619B19D360016A590 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				EE57CB7419B19D300016A590 /* Bill.swift */,
+				EE57CB7419B19D300016A590 /* Calculator.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -248,7 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EEBC735019AD9BF10036F245 /* ViewController.swift in Sources */,
-				EE57CB7519B19D300016A590 /* Bill.swift in Sources */,
+				EE57CB7519B19D300016A590 /* Calculator.swift in Sources */,
 				EE57CB7319B198CE0016A590 /* README.md in Sources */,
 				EEBC734E19AD9BF10036F245 /* AppDelegate.swift in Sources */,
 				EEE9E89C1C4DCAD6000DCAA2 /* SettingsViewController.swift in Sources */,

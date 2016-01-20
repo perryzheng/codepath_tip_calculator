@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let bill: Bill = Bill()
+    let calculator = Calculator()
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
@@ -60,7 +60,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func appEnterForeground(notification: NSNotification) {
         print("in appEnterForeground")
-        rawAmount = bill.getRawAmount()
+        rawAmount = calculator.getRawAmount()
         billField.text = rawAmount
         onEditingChanged(self)
     }
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func appResign(notification: NSNotification) {
         print("in appResign")
-        bill.setRawAmount(rawAmount)
+        calculator.setRawAmount(rawAmount)
     }
     
     func appEnterBackground(notification: NSNotification) {
@@ -95,7 +95,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func saveRawAccount() {
         rawAmount = billField.text!
-        bill.setRawAmount(rawAmount)
+        calculator.setRawAmount(rawAmount)
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
