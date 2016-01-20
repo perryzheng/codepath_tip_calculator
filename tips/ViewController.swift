@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let bill: Bill = Bill()
-    
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
@@ -30,7 +29,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         updateUI()
         
-        //two are unnecessary and are here only for educational purposes
+        //appBecomeActive and appEnterBackground are unnecessary and are here only for educational purposes
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appBecomeActive:", name:
             UIApplicationDidBecomeActiveNotification, object: nil)
         
@@ -55,35 +54,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             checkSplitTableView.hidden = false
             tipControl.hidden = false
         }
-        checkSplitTableView.reloadData()
         billField.becomeFirstResponder()
+        checkSplitTableView.reloadData()
     }
     
-    //ordering when exiting the app
-    //appResign
-    //appEnterBackground
-    
-    //ordengi when reopening the app
-    //enterForeGround
-    //appBecomeActive
+    func appEnterForeground(notification: NSNotification) {
+        print("in appEnterForeground")
+        rawAmount = bill.getRawAmount()
+        billField.text = rawAmount
+        onEditingChanged(self)
+    }
     
     func appBecomeActive(notification: NSNotification) {
         print("in appBecomeActive")
     }
     
-    func appEnterForeground(notification: NSNotification) {
-        print("in ViewController enter foreground")
-        rawAmount = bill.getRawAmount()
-        onEditingChanged(self)
+    func appResign(notification: NSNotification) {
+        print("in appResign")
+        bill.setRawAmount(rawAmount)
     }
     
     func appEnterBackground(notification: NSNotification) {
         print("in appEnterBackground")
-    }
-    
-    func appResign(notification: NSNotification) {
-        print("in ViewController appResign")
-        bill.setRawAmount(rawAmount)
     }
     
     override func viewWillDisappear(animated: Bool) {

@@ -10,6 +10,8 @@ import UIKit
 
 class Bill: NSObject {
     var _rawAmount: String = ""
+    // number of seconds before we refresh the last saved raw amount
+    let DefaultSecondBeforeRefreshing = 60.0
     
     func getRawAmount() -> String {
         let userDefaults = NSUserDefaults.standardUserDefaults()
@@ -19,7 +21,7 @@ class Bill: NSObject {
             return ""
         }
         let diffSec = (NSDate().timeIntervalSinceReferenceDate - lastRefreshDate.timeIntervalSinceReferenceDate)
-        if (diffSec > 60) {
+        if (diffSec > DefaultSecondBeforeRefreshing) {
             self.setRawAmount("")
             return ""
         } else {
