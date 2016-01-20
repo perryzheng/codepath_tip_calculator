@@ -9,7 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    let calculator = Calculator()
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
@@ -29,15 +28,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         updateUI()
         
-        //appBecomeActive and appEnterBackground are unnecessary and are here only for educational purposes
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appBecomeActive:", name:
-            UIApplicationDidBecomeActiveNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterForeground:", name:
             UIApplicationWillEnterForegroundNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterBackground:", name:
-            UIApplicationDidEnterBackgroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
 
@@ -45,6 +37,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func updateUI() {
         rawAmount = billField.text!
+        if let symbol = NSLocale.currentLocale().objectForKey(NSLocaleCurrencySymbol) {
+            billField.attributedPlaceholder = NSAttributedString(string: "\(symbol)")
+        }
+
         if (rawAmount == "") {
             checkSplitTableView.hidden = true
             tipControl.hidden = true
@@ -59,26 +55,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func appEnterForeground(notification: NSNotification) {
-        print("in appEnterForeground")
-        rawAmount = calculator.getRawAmount()
+        rawAmount = Utils.getRawAmount()
         billField.text = rawAmount
         onEditingChanged(self)
     }
-    
-    func appBecomeActive(notification: NSNotification) {
-        print("in appBecomeActive")
-    }
-    
+  
     func appResign(notification: NSNotification) {
-        print("in appResign")
-        calculator.setRawAmount(rawAmount)
+        Utils.saveRawAmount(rawAmount)
     }
     
-    func appEnterBackground(notification: NSNotification) {
-        print("in appEnterBackground")
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        let defaultTipPercentageOpt = Utils.getDefaultTipPercentage()
+        if let defaultTipPercentage = defaultTipPercentageOpt {
+            let index = Utils.tipPercentages.indexOf(defaultTipPercentage)
+            tipControl.selectedSegmentIndex = index!
+        }
+        updateUI()
     }
     
     @IBAction func onTap(sender: AnyObject) {
@@ -95,7 +87,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     private func saveRawAccount() {
         rawAmount = billField.text!
-        calculator.setRawAmount(rawAmount)
+        Utils.saveRawAmount(rawAmount)
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -105,19 +97,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel!.textAlignment = NSTextAlignment.Right
         cell.textLabel!.textColor = UIColor.greenColor()
 
-        var tipPercentages = [0.18, 0.20, 0.22]
-        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let tipPercentage = Utils.tipPercentages[tipControl.selectedSegmentIndex]
         
         let billAmount = billField.text!._bridgeToObjectiveC().doubleValue
         let tip = billAmount * tipPercentage
         total = billAmount + tip
         
+        let symbol = NSLocale.currentLocale().objectForKey(NSLocaleCurrencySymbol) as? String ?? "$"
         if (indexPath.row == 0) {
             for view in cell.contentView.subviews {
                 view.removeFromSuperview()
             }
             
-            cell.textLabel!.text = String(format: "Tip: $%.2f", tip)
+            cell.textLabel!.text = String(format: "Tip: \(symbol)%.2f", tip)
             cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
         } else {
             for var i = 0; i < indexPath.row; i++ {
@@ -125,7 +117,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.contentView.addSubview(imv)
                 imv = nil
             }
-            cell.textLabel!.text = String(format: "$%.2f", total / Double(indexPath.row))
+            cell.textLabel!.text = String(format: "\(symbol)%.2f", total / Double(indexPath.row))
             cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
         }
         return cell

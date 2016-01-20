@@ -101,6 +101,9 @@
                                     <segment title="20%"/>
                                     <segment title="22%"/>
                                 </segments>
+                                <connections>
+                                    <action selector="indexChanged:" destination="qDa-Zj-31a" eventType="valueChanged" id="l0P-jB-UbI"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default tip percentage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QJU-sX-Z3D">
                                 <rect key="frame" x="20" y="86" width="171" height="21"/>
@@ -114,7 +117,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="l7c-NT-O39"/>
                     <connections>
-                        <outlet property="tipControl" destination="PSQ-SQ-DgV" id="ebq-48-v4W"/>
+                        <outlet property="tipControl" destination="PSQ-SQ-DgV" id="Na0-aV-wCK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uNB-Iw-zqu" userLabel="First Responder" sceneMemberID="firstResponder"/>

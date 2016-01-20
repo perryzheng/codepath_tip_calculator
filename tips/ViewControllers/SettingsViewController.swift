@@ -2,26 +2,24 @@
 //  SettingsViewController.swift
 //  tips
 //
-//  Created by Perry Zheng on 1/18/16.
+//  Created by Perry Zheng on 1/19/16.
 //  Copyright © 2016 Perry Zheng. All rights reserved.
 //
 
 import UIKit
 
-protocol SettingsControllerDelegate: class {
-    func settingsController(settingVC: SettingsViewController, didSaveTipPercentage percentage: Double)
-}
-
 class SettingsViewController: UIViewController {
 
-    weak var delegate: SettingsControllerDelegate?
-    var tipPercentage: Double?
-    
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let defaultTipPercentageOpt = Utils.getDefaultTipPercentage()
+        if let defaultTipPercentage = defaultTipPercentageOpt {
+            if let index = Utils.tipPercentages.indexOf(defaultTipPercentage) {
+                tipControl.selectedSegmentIndex = index
+            }
+        }
         // Do any additional setup after loading the view.
     }
 
@@ -31,6 +29,11 @@ class SettingsViewController: UIViewController {
     }
     
 
+    @IBAction func indexChanged(sender: UISegmentedControl) {
+        let defaultTipPercentage = Utils.tipPercentages[tipControl.selectedSegmentIndex]
+        Utils.saveDefaultTipPercentage(defaultTipPercentage)
+    }
+    
     /*
     // MARK: - Navigation
 
