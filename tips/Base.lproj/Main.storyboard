@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="IpP-pJ-eRE">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="sIT-e2-xxs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="S9P-nk-e8p">
-                                <rect key="frame" x="16" y="130" width="288" height="29"/>
+                                <rect key="frame" x="16" y="142" width="288" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="18%"/>
@@ -25,16 +25,6 @@
                                     <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="LDL-Op-3yZ"/>
                                 </connections>
                             </segmentedControl>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="RyO-hN-N1g">
-                                <rect key="frame" x="16" y="47" width="288" height="60"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="80"/>
-                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                <connections>
-                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingChanged" id="lUm-sl-Wcy"/>
-                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="uoH-hJ-weH"/>
-                                </connections>
-                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="50" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Dv-ka-7xh">
                                 <rect key="frame" x="0.0" y="184" width="320" height="384"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -56,6 +46,16 @@
                                     <outlet property="delegate" destination="vXZ-lx-hvc" id="dsd-fw-H0z"/>
                                 </connections>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="RyO-hN-N1g">
+                                <rect key="frame" x="16" y="82" width="288" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="50"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <connections>
+                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingChanged" id="lUm-sl-Wcy"/>
+                                    <action selector="onEditingChanged:" destination="vXZ-lx-hvc" eventType="editingDidEnd" id="uoH-hJ-weH"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.24299049951432816" green="1" blue="0.21989617846837939" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -64,13 +64,16 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Tip Calculator" id="2M5-kV-BLk">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Ufi-LU-hJp"/>
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="Ufi-LU-hJp">
+                            <connections>
+                                <segue destination="qDa-Zj-31a" kind="push" id="V4H-eA-irS"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="billField" destination="RyO-hN-N1g" id="she-tb-XY1"/>
                         <outlet property="checkSplitTableView" destination="2Dv-ka-7xh" id="NmH-uI-p4a"/>
                         <outlet property="tipControl" destination="S9P-nk-e8p" id="gCN-da-ptW"/>
-                        <segue destination="IpP-pJ-eRE" kind="modal" identifier="to raw amount segue" id="MMJ-HF-RnN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -80,37 +83,64 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-3077" y="-1418"/>
+            <point key="canvasLocation" x="-3048" y="-1413"/>
         </scene>
-        <!--Raw Amount View Controller-->
-        <scene sceneID="6g2-9f-ucP">
+        <!--Settings View Controller-->
+        <scene sceneID="ZtW-rs-1s3">
             <objects>
-                <viewController id="IpP-pJ-eRE" customClass="RawAmountViewController" customModule="tips" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="XN4-FV-fcR">
+                <viewController id="qDa-Zj-31a" customClass="SettingsViewController" customModule="tips" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="21G-8u-OS3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="          $" textAlignment="justified" adjustsFontSizeToFit="NO" minimumFontSize="80" id="JBg-6E-cvb">
-                                <rect key="frame" x="31" y="120" width="267" height="132"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="PSQ-SQ-DgV">
+                                <rect key="frame" x="20" y="115" width="280" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="textColor" red="0.1072833010111672" green="0.44348675271739135" blue="0.20805052180745648" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="80"/>
-                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                <segments>
+                                    <segment title="18%"/>
+                                    <segment title="20%"/>
+                                    <segment title="22%"/>
+                                </segments>
                                 <connections>
-                                    <action selector="enterRawAmount:" destination="IpP-pJ-eRE" eventType="editingChanged" id="xVG-w4-NLm"/>
+                                    <action selector="indexChanged:" destination="qDa-Zj-31a" eventType="valueChanged" id="l0P-jB-UbI"/>
                                 </connections>
-                            </textField>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default tip percentage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="QJU-sX-Z3D">
+                                <rect key="frame" x="20" y="86" width="171" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.43948711191933421" green="1" blue="0.35865952742606777" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.24299049950000001" green="1" blue="0.21989617850000001" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="l7c-NT-O39"/>
                     <connections>
-                        <outlet property="rawAmountField" destination="JBg-6E-cvb" id="eHV-O3-waW"/>
-                        <segue destination="vXZ-lx-hvc" kind="modal" identifier="check_list_view" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="XDR-KV-siJ"/>
+                        <outlet property="tipControl" destination="PSQ-SQ-DgV" id="Na0-aV-wCK"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DQa-zs-QvQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uNB-Iw-zqu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3808" y="-763"/>
+            <point key="canvasLocation" x="-3163" y="-698"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="gwm-Dc-wG9">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="sIT-e2-xxs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WCu-8W-DYA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vXZ-lx-hvc" kind="relationship" relationship="rootViewController" id="um4-SZ-fRa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZKR-QJ-ggr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3502" y="-1303"/>
         </scene>
     </scenes>
 </document>

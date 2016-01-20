@@ -9,71 +9,68 @@
 import UIKit
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    let bill: Bill = Bill()
-    
     var rawAmount: String = ""
     
     @IBOutlet weak var checkSplitTableView: UITableView!;
     @IBOutlet weak var billField: UITextField!
+    
     @IBOutlet weak var tipControl: UISegmentedControl!
     
     let uiImage = UIImage(named:"person.png")
     let numPeople: Int = 9
-
+    let rawViewBillFieldYPosition = CGFloat(182.0)
+    let populatedBillFieldYPosition = CGFloat(82.0)
+    
     private var total: Double = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         
-        //two are unnecessary and are here only for educational purposes
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appBecomeActive:", name:
-            UIApplicationDidBecomeActiveNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterForeground:", name:
             UIApplicationWillEnterForegroundNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:"appEnterBackground:", name:
-            UIApplicationDidEnterBackgroundNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"appResign:", name: UIApplicationWillResignActiveNotification, object: nil)
 
     }
     
     func updateUI() {
+        rawAmount = billField.text!
+        if let symbol = NSLocale.currentLocale().objectForKey(NSLocaleCurrencySymbol) {
+            billField.attributedPlaceholder = NSAttributedString(string: "\(symbol)")
+        }
+
+        if (rawAmount == "") {
+            checkSplitTableView.hidden = true
+            tipControl.hidden = true
+            billField.frame = CGRectMake(billField.frame.origin.x, rawViewBillFieldYPosition, billField.frame.size.width, billField.frame.size.height)
+        } else {
+            billField.frame = CGRectMake(billField.frame.origin.x, populatedBillFieldYPosition, billField.frame.size.width, billField.frame.size.height)
+            checkSplitTableView.hidden = false
+            tipControl.hidden = false
+        }
         billField.becomeFirstResponder()
-        billField.text = rawAmount
-    }
-    
-    //ordering when exiting the app
-    //appResign
-    //appEnterBackground
-    
-    //ordengi when reopening the app
-    //enterForeGround
-    //appBecomeActive
-    
-    func appBecomeActive(notification: NSNotification) {
-        print("in appBecomeActive")
+        checkSplitTableView.reloadData()
     }
     
     func appEnterForeground(notification: NSNotification) {
-        print("in ViewController enter foreground")
-        rawAmount = bill.getRawAmount()
+        rawAmount = Utils.getRawAmount()
+        billField.text = rawAmount
         onEditingChanged(self)
     }
-    
-    func appEnterBackground(notification: NSNotification) {
-        print("in appEnterBackground")
-    }
-    
+  
     func appResign(notification: NSNotification) {
-        print("in ViewController appResign")
-        bill.setRawAmount(rawAmount)
+        Utils.saveRawAmount(rawAmount)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        let defaultTipPercentageOpt = Utils.getDefaultTipPercentage()
+        if let defaultTipPercentage = defaultTipPercentageOpt {
+            let index = Utils.tipPercentages.indexOf(defaultTipPercentage)
+            tipControl.selectedSegmentIndex = index!
+        }
+        updateUI()
     }
     
     @IBAction func onTap(sender: AnyObject) {
@@ -85,41 +82,34 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
     @IBAction func onEditingChanged(sender: AnyObject) {
-        checkSplitTableView.reloadData()
+        updateUI()
     }
     
     private func saveRawAccount() {
         rawAmount = billField.text!
-        bill.setRawAmount(rawAmount)
+        Utils.saveRawAmount(rawAmount)
     }
-    
-    private func possibleToSegue() {
-        if (rawAmount.isEmpty) {
-            self.performSegueWithIdentifier("to raw amount segue", sender: self)
-        }
-    }
-    
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        possibleToSegue()
         saveRawAccount()
         
         let cell = tableView.dequeueReusableCellWithIdentifier("person split cell", forIndexPath: indexPath)
         cell.textLabel!.textAlignment = NSTextAlignment.Right
         cell.textLabel!.textColor = UIColor.greenColor()
 
-        var tipPercentages = [0.18, 0.20, 0.22]
-        let tipPercentage = tipPercentages[tipControl.selectedSegmentIndex]
+        let tipPercentage = Utils.tipPercentages[tipControl.selectedSegmentIndex]
         
         let billAmount = billField.text!._bridgeToObjectiveC().doubleValue
         let tip = billAmount * tipPercentage
         total = billAmount + tip
         
+        let symbol = NSLocale.currentLocale().objectForKey(NSLocaleCurrencySymbol) as? String ?? "$"
         if (indexPath.row == 0) {
             for view in cell.contentView.subviews {
                 view.removeFromSuperview()
             }
             
-            cell.textLabel!.text = String(format: "Tip: $%.2f", tip)
+            cell.textLabel!.text = String(format: "Tip: \(symbol)%.2f", tip)
             cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 20.0)
         } else {
             for var i = 0; i < indexPath.row; i++ {
@@ -127,7 +117,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 cell.contentView.addSubview(imv)
                 imv = nil
             }
-            cell.textLabel!.text = String(format: "$%.2f", total / Double(indexPath.row))
+            cell.textLabel!.text = String(format: "\(symbol)%.2f", total / Double(indexPath.row))
             cell.textLabel!.font = UIFont(name:"HelveticaNeue-Thin", size: 40.0)
         }
         return cell
